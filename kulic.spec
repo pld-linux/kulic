@@ -44,6 +44,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_pixmapsdir}}
+install misc/%{name}.desktop $RPM_BUILD_ROOT%{_desktopdir}
+install misc/%{name}.xpm $RPM_BUILD_ROOT%{_pixmapsdir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -53,3 +57,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/%{name}
 %{_mandir}/man6/kulic*
+%{_desktopdir}/%{name}.desktop
+%{_pixmapsdir}/%{name}.xpm
