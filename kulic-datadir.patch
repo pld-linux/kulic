@@ -1,36 +1,23 @@
---- kulic-1.1-orig/src/GMAP.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GMAP.cpp	2009-12-29 15:55:54.510065847 +0100
-@@ -443,9 +443,9 @@
+diff -Nur kulic-1.1.orig/src/GMAP.cpp kulic-1.1/src/GMAP.cpp
+--- kulic-1.1.orig/src/GMAP.cpp	2009-12-29 19:48:00.625210128 +0100
++++ kulic-1.1/src/GMAP.cpp	2009-12-29 19:49:35.228233239 +0100
+@@ -443,11 +443,8 @@
  
  	sprintf(s, "maps/map%d.wav", mapa);
  	if ((m_music = load_wav(s)) == NULL) {
 -		sprintf(s, "/usr/local/share/kulic/maps/map%d.wav", mapa);
-+		sprintf(s, "%s/maps/map%d.wav", PACKAGE_DATA_DIR, mapa);
- 		if ((m_music = load_wav(s)) == NULL) {
+-		if ((m_music = load_wav(s)) == NULL) {
 -			sprintf(s, "/usr/share/kulic/maps/map%d.wav", mapa);
-+			sprintf(s, "%s/maps/map%d.wav", PACKAGE_DATA_DIR, mapa);
- 			m_music = load_wav(s);
- 		}
+-			m_music = load_wav(s);
+-		}
++		sprintf(s, PACKAGE_DATA_DIR "/maps/map%d.wav", mapa);
++		m_music = load_wav(s);
  	}
---- kulic-1.1-orig/src/HGFX.cpp	2009-12-29 15:53:05.696945688 +0100
-+++ kulic-1.1/src/HGFX.cpp	2009-12-29 15:59:16.616075254 +0100
-@@ -42,11 +42,11 @@
- 	bmp = load_bitmap(filename, pal);
- 	if (bmp == NULL) {
- 		char filename2[255];
--		sprintf(filename2, "/usr/local/share/kulic/%s", filename);
-+		sprintf(filename2, "%s/%s", PACKAGE_DATA_DIR, filename);
- 		bmp = load_bitmap(filename2, pal);
- 		
- 		if (bmp == NULL) {
--			sprintf(filename2, "/usr/share/kulic/%s", filename);
-+			sprintf(filename2, "%s/%s", PACKAGE_DATA_DIR, filename);
- 			bmp = load_bitmap(filename2, pal);
- 		}
- 	}
-	
---- kulic-1.1-orig/src/GMenuBack.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GMenuBack.cpp	2009-12-29 17:27:23.268671770 +0100
+ 
+ 	return true;
+diff -Nur kulic-1.1.orig/src/GMenuBack.cpp kulic-1.1/src/GMenuBack.cpp
+--- kulic-1.1.orig/src/GMenuBack.cpp	2009-12-29 19:48:00.625210128 +0100
++++ kulic-1.1/src/GMenuBack.cpp	2009-12-29 19:50:22.241997105 +0100
 @@ -43,8 +43,7 @@
  
  	if (ini.hudba)
@@ -41,35 +28,80 @@
  
  	
  	
---- kulic-1.1-orig/src/GRUN.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GRUN.cpp	2009-12-29 17:30:45.285526484 +0100
-@@ -279,11 +279,10 @@
+diff -Nur kulic-1.1.orig/src/GRUN.cpp kulic-1.1/src/GRUN.cpp
+--- kulic-1.1.orig/src/GRUN.cpp	2009-12-29 19:48:00.635210218 +0100
++++ kulic-1.1/src/GRUN.cpp	2009-12-29 19:54:05.044381028 +0100
+@@ -280,8 +280,7 @@
  
  	fonts = load_datafile("gfx/view/fonts.dat");
  	if (fonts == NULL) 
 -		if ((fonts = load_datafile("/usr/local/share/kulic/gfx/view/fonts.dat")) == NULL)
 -			if ((fonts = load_datafile("/usr/share/kulic/gfx/view/fonts.dat")) == NULL) {
--				cerr << "chybi fonts.dat" << endl;
--				return false;
--			}
-+	    if ((fonts = load_datafile(PACKAGE_DATA_DIR "/gfx/view/fonts.dat")) == NULL) {
-+		    cerr << "chybi fonts.dat" << endl;
-+		    return false;
-+	    }
- 
- 	if (!m_sshoots.LoadSFX()) {
- 		cerr << "Chybi soubor shoots.dat" << endl;
---- kulic-1.1-orig/src/GSShoots.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GSShoots.cpp	2009-12-29 17:36:58.131947319 +0100
-@@ -24,9 +24,8 @@
++			if ((fonts = load_datafile(PACKAGE_DATA_DIR "/gfx/view/fonts.dat")) == NULL) {
+ 				cerr << "chybi fonts.dat" << endl;
+ 				return false;
+ 			}
+diff -Nur kulic-1.1.orig/src/GSShoots.cpp kulic-1.1/src/GSShoots.cpp
+--- kulic-1.1.orig/src/GSShoots.cpp	2009-12-29 19:48:00.628543452 +0100
++++ kulic-1.1/src/GSShoots.cpp	2009-12-29 19:51:03.251569090 +0100
+@@ -24,8 +24,7 @@
  {
  	if (!ini.zvuky) return true;
  	if((m_soundsatd = load_datafile("sfx/shoots.dat")) == NULL) 
 -		if((m_soundsatd = load_datafile("/usr/local/share/kulic/sfx/shoots.dat")) == NULL) 
 -			if((m_soundsatd = load_datafile("/usr/share/kulic/sfx/shoots.dat")) == NULL) 
--				return true;
-+		    if((m_soundsatd = load_datafile(PACKAGE_DATA_DIR "/sfx/shoots.dat")) == NULL) 
-+			    return true;
++			if((m_soundsatd = load_datafile(PACKAGE_DATA_DIR "/sfx/shoots.dat")) == NULL) 
+ 				return true;
  
  	for (int i = 0; i < MAX_SAMPLES; i++)
- 		if((m_voices[i] = allocate_voice((SAMPLE *)m_soundsatd[i].dat)) == -1) 
+diff -Nur kulic-1.1.orig/src/HGFX.cpp kulic-1.1/src/HGFX.cpp
+--- kulic-1.1.orig/src/HGFX.cpp	2009-12-29 19:48:00.631877001 +0100
++++ kulic-1.1/src/HGFX.cpp	2009-12-29 19:52:05.881010853 +0100
+@@ -42,13 +42,8 @@
+ 	bmp = load_bitmap(filename, pal);
+ 	if (bmp == NULL) {
+ 		char filename2[255];
+-		sprintf(filename2, "/usr/local/share/kulic/%s", filename);
++		sprintf(filename2, PACKAGE_DATA_DIR "/%s", filename);
+ 		bmp = load_bitmap(filename2, pal);
+-		
+-		if (bmp == NULL) {
+-			sprintf(filename2, "/usr/share/kulic/%s", filename);
+-			bmp = load_bitmap(filename2, pal);
+-		}
+ 	}
+ 	
+ 	if (bmp == NULL) return NULL;
+diff -Nur kulic-1.1.orig/src/HLIGHTS.cpp kulic-1.1/src/HLIGHTS.cpp
+--- kulic-1.1.orig/src/HLIGHTS.cpp	2009-12-29 19:48:00.631877001 +0100
++++ kulic-1.1/src/HLIGHTS.cpp	2009-12-29 19:52:21.091134110 +0100
+@@ -697,13 +697,8 @@
+ 	bmp = load_bitmap(filename, pal);
+ 	if (bmp == NULL) {
+ 		char filename2[255];
+-		sprintf(filename2, "/usr/local/share/kulic/%s", filename);
++		sprintf(filename2, PACKAGE_DATA_DIR "/%s", filename);
+ 		bmp = load_bitmap(filename2, pal);
+-		
+-		if (bmp == NULL) {
+-			sprintf(filename2, "/usr/share/kulic/%s", filename);
+-			bmp = load_bitmap(filename2, pal);
+-		}
+ 	}
+ 	
+ 	if (bmp == NULL) return NULL;
+diff -Nur kulic-1.1.orig/src/main.cc kulic-1.1/src/main.cc
+--- kulic-1.1.orig/src/main.cc	2009-12-29 19:48:00.635210218 +0100
++++ kulic-1.1/src/main.cc	2009-12-29 19:53:08.545716245 +0100
+@@ -62,10 +62,8 @@
+ 	
+ 	// prohledani map
+ 	run.m_maps = run.SearchForMaps("");
+-	    int m2 = run.SearchForMaps("/usr/local/share/kulic/");
+-	    int m3 = run.SearchForMaps("/usr/share/kulic/");
++	    int m2 = run.SearchForMaps(PACKAGE_DATA_DIR "/");
+ 	if (m2 > run.m_maps) run.m_maps = m2; 
+-	if (m3 > run.m_maps) run.m_maps = m3; 
+ 		
+ 	if (run.m_maps == 0) {
+ 		allegro_message("No maps found");
