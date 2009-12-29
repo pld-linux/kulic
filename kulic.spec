@@ -9,9 +9,10 @@ Source0:	http://hippo.nipax.cz/src/%{name}-%{version}.tar.gz
 Patch0:		%{name}-cstring.patch
 URL:		http://hippo.nipax.cz/download.en.php
 BuildRequires:	allegro-devel
-BuildRequires:	automake
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	sed >= 4.0
 # Need for sound, imho allegro-alsa is the best solution
 Suggests:	allegro-alsa
 # Suggests:	allegro-arts
@@ -24,8 +25,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %prep
 %setup -q
+%{__sed} -i -e 's,\r$,,' src/*.c*
 %patch0 -p1
-%{__sed} -i "s,/usr/local,/usr,g" src/*.c*
+%{__sed} -i "s,%{_prefix}/local,%{_prefix},g" src/*.c*
 
 %build
 
