@@ -1,0 +1,40 @@
+--- kulic-1.1-orig/src/main.cc	2009-12-29 13:16:39.860801036 +0100
++++ kulic-1.1/src/main.cc	2009-12-29 13:17:07.620589890 +0100
+@@ -23,6 +23,7 @@
+ #include <strings.h>
+ #include <errno.h>
+ #include <sys/file.h>
++#include <cstring>
+ 
+ 
+ 
+--- kulic-1.1-orig/src/GMENUSET.cpp	2009-12-29 13:16:39.893510284 +0100
++++ kulic-1.1/src/GMENUSET.cpp	2009-12-29 13:21:42.364104068 +0100
+@@ -5,6 +5,7 @@
+ #include "stdafx.h"
+ #include "GMenuSet.h"
+ #include <iostream>
++#include <cstring>
+ 
+ using namespace std;
+ 
+--- kulic-1.1-orig/src/GRUN.cpp	2009-12-29 13:16:39.863810315 +0100
++++ kulic-1.1/src/GRUN.cpp	2009-12-29 13:25:38.653455950 +0100
+@@ -2,6 +2,7 @@
+ //
+ //////////////////////////////////////////////////////////////////////
+ 
++#include <cstring>
+ #include "stdh.h"
+ 
+ #include "GSoldier.h"
+--- kulic-1.1-orig/src/GVIEW.cpp	2009-12-29 13:16:39.863810315 +0100
++++ kulic-1.1/src/GVIEW.cpp	2009-12-29 13:26:21.000117965 +0100
+@@ -2,6 +2,7 @@
+ //
+ //////////////////////////////////////////////////////////////////////
+ 
++#include <cstring>
+ #include "stdh.h"
+ #include "soldiers.h"
+ #include "zbrane.h"
