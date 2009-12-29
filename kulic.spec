@@ -1,12 +1,15 @@
+# TODO:
+# - patch src/main.cc too (/usr -> PACKAGE_DATA_DIR), doesn't work: don't found map
 Summary:	2d shooting game
 Name:		kulic
 Version:	1.1
-Release:	0.3
+Release:	0.6
 License:	GPL v2
 Group:		X11/Applications/Games
 Source0:	http://hippo.nipax.cz/src/%{name}-%{version}.tar.gz
 # Source0-md5:	16aff4bded3ae1c6712ca71d4d429730
 Patch0:		%{name}-cstring.patch
+Patch1:		%{name}-datadir.patch
 URL:		http://hippo.nipax.cz/download.en.php
 BuildRequires:	allegro-devel
 BuildRequires:	autoconf
@@ -27,7 +30,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %setup -q
 %{__sed} -i -e 's,\r$,,' src/*.c*
 %patch0 -p1
-%{__sed} -i "s,%{_prefix}/local,%{_prefix},g" src/*.c*
+%patch1 -p1
 
 %build
 
