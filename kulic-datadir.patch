@@ -28,61 +28,48 @@
  			bmp = load_bitmap(filename2, pal);
  		}
  	}
+	
 --- kulic-1.1-orig/src/GMenuBack.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GMenuBack.cpp	2009-12-29 16:06:48.989269541 +0100
-@@ -42,9 +42,11 @@
- 	}
++++ kulic-1.1/src/GMenuBack.cpp	2009-12-29 17:27:23.268671770 +0100
+@@ -43,8 +43,7 @@
  
  	if (ini.hudba)
--		if ((m_dat = load_datafile("sfx/menu.dat")) == NULL)
+ 		if ((m_dat = load_datafile("sfx/menu.dat")) == NULL)
 -			if ((m_dat = load_datafile("/usr/local/share/kulic/sfx/menu.dat")) == NULL)
 -				m_dat = load_datafile("/usr/share/kulic/sfx/menu.dat");
-+		if ((m_dat = load_datafile("sfx/menu.dat")) == NULL) {
-+			char tmpfilename[255];
-+			sprintf(tmpfilename,"%s/%s",PACKAGE_DATA_DIR,"sfx/menu.dat");
-+			m_dat = load_datafile(tmpfilename);
-+		}
++			m_dat = load_datafile(PACKAGE_DATA_DIR "/sfx/menu.dat");
  
  	
  	
 --- kulic-1.1-orig/src/GRUN.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GRUN.cpp	2009-12-29 16:09:10.802890853 +0100
-@@ -278,12 +278,14 @@
- 
++++ kulic-1.1/src/GRUN.cpp	2009-12-29 17:30:45.285526484 +0100
+@@ -279,11 +279,10 @@
  
  	fonts = load_datafile("gfx/view/fonts.dat");
--	if (fonts == NULL) 
+ 	if (fonts == NULL) 
 -		if ((fonts = load_datafile("/usr/local/share/kulic/gfx/view/fonts.dat")) == NULL)
 -			if ((fonts = load_datafile("/usr/share/kulic/gfx/view/fonts.dat")) == NULL) {
 -				cerr << "chybi fonts.dat" << endl;
 -				return false;
 -			}
-+	if (fonts == NULL) {
-+		char tmpfilename[255];
-+		sprintf(tmpfilename,"%s/%s",PACKAGE_DATA_DIR,"gfx/view/fonts.dat");
-+		if ((fonts = load_datafile(tmpfilename)) == NULL) {
-+			cerr << "chybi fonts.dat" << endl;
-+			return false;
-+		}
-+	}
++	    if ((fonts = load_datafile(PACKAGE_DATA_DIR "/gfx/view/fonts.dat")) == NULL) {
++		    cerr << "chybi fonts.dat" << endl;
++		    return false;
++	    }
  
  	if (!m_sshoots.LoadSFX()) {
  		cerr << "Chybi soubor shoots.dat" << endl;
 --- kulic-1.1-orig/src/GSShoots.cpp	2009-12-29 15:53:05.699238367 +0100
-+++ kulic-1.1/src/GSShoots.cpp	2009-12-29 16:19:03.306164607 +0100
-@@ -23,10 +23,12 @@
- bool GSShoots::LoadSFX()
++++ kulic-1.1/src/GSShoots.cpp	2009-12-29 17:36:58.131947319 +0100
+@@ -24,9 +24,8 @@
  {
  	if (!ini.zvuky) return true;
--	if((m_soundsatd = load_datafile("sfx/shoots.dat")) == NULL) 
+ 	if((m_soundsatd = load_datafile("sfx/shoots.dat")) == NULL) 
 -		if((m_soundsatd = load_datafile("/usr/local/share/kulic/sfx/shoots.dat")) == NULL) 
 -			if((m_soundsatd = load_datafile("/usr/share/kulic/sfx/shoots.dat")) == NULL) 
-+	if((m_soundsatd = load_datafile("sfx/shoots.dat")) == NULL) {
-+		char tmpfilename[255];
-+		sprintf(tmpfilename,"%s/%s",PACKAGE_DATA_DIR,"sfx/shoots.dat");
-+		if((m_soundsatd = load_datafile(tmpfilename)) == NULL) 
- 				return true;
-+	}
+-				return true;
++		    if((m_soundsatd = load_datafile(PACKAGE_DATA_DIR "/sfx/shoots.dat")) == NULL) 
++			    return true;
  
  	for (int i = 0; i < MAX_SAMPLES; i++)
  		if((m_voices[i] = allocate_voice((SAMPLE *)m_soundsatd[i].dat)) == -1) 
