@@ -1,5 +1,5 @@
 # TODO:
-# - patch src/main.cc too (/usr -> PACKAGE_DATA_DIR), doesn't work: don't found map
+# - x86_64 version has broken graphics
 Summary:	2d shooting game
 Name:		kulic
 Version:	1.1
@@ -14,6 +14,8 @@ URL:		http://hippo.nipax.cz/download.en.php
 BuildRequires:	allegro-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libjpeg-devel
+BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	sed >= 4.0
 # Need for sound, imho allegro-alsa is the best solution
@@ -33,7 +35,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %patch1 -p1
 
 %build
-
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
